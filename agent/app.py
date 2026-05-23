@@ -36,8 +36,9 @@ def create_agent() -> AgentExecutor:
     if not api_key:
         raise ValueError("OPENROUTER_API_KEY environment variable is required")
 
+    model = os.environ.get("MODEL", "google/gemini-2.0-flash-001")
     llm = ChatOpenRouter(
-        model_name="openai/gpt-4o-mini",
+        model_name=model,
         temperature=0,
     )
 

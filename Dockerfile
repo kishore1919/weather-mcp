@@ -13,7 +13,8 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
 
 # Copy source code and install project
-COPY src ./src
+COPY agent ./agent
+COPY weather_mcp ./weather_mcp
 RUN uv sync --frozen --no-dev
 
 # Stage 2: Runtime
@@ -23,7 +24,8 @@ WORKDIR /app
 
 # Copy virtual environment and project from builder
 COPY --from=builder /app/.venv /app/.venv
-COPY --from=builder /app/src /app/src
+COPY --from=builder /app/agent /app/agent
+COPY --from=builder /app/weather_mcp /app/weather_mcp
 COPY pyproject.toml ./
 
 # Add virtual environment to PATH
