@@ -45,22 +45,62 @@ An MCP (Model Context Protocol) server for the OpenWeather API, featuring an int
 
 ### Usage
 
-#### Running the MCP Server
+#### 1. Running the MCP Server
+
+The MCP server provides the weather tools.
+
+**Standard Mode (HTTP):**
 ```bash
 uv run weather-mcp
 ```
+This starts the server on `http://0.0.0.0:8000` by default.
 
-#### Running the Agent UI
+**Development/Testing Mode:**
+To test the server with a built-in inspector, use:
+```bash
+uv run fastmcp dev weather_mcp/server.py
+```
+This opens a local web interface (usually at `http://localhost:6274`) to test the MCP tools directly.
+
+#### 2. Running the Agent UI
+
+The Weather Agent is a LangChain-powered chat interface that uses the tools provided by the server.
+
 ```bash
 uv run weather-agent
 ```
+Once started, you can access the Gradio UI at `http://localhost:7860`.
 
-#### Running with Docker
+> **Note**: Ensure you have configured `OPENWEATHER_API_KEY` and `OPENROUTER_API_KEY` in your `.env` file before running the agent.
+
+#### 3. Using with MCP Clients (e.g., Claude Desktop)
+
+To use this server with the Claude Desktop app, add the following to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:/Users/kikki/Documents/code/weather-mcp",
+        "run",
+        "weather-mcp"
+      ],
+      "env": {
+        "OPENWEATHER_API_KEY": "your_key_here"
+      }
+    }
+  }
+}
+```
+*(Adjust the directory path to your actual installation path)*
+
+#### 4. Running with Docker
+
 ```bash
 docker build -t weather-mcp .
 docker run -p 7860:7860 --env-file .env weather-mcp
 ```
 
-## License
-
-MIT

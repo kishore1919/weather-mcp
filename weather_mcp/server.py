@@ -5,6 +5,9 @@ from dataclasses import dataclass
 
 import httpx
 from fastmcp import FastMCP
+from dotenv import load_dotenv
+
+load_dotenv()
 
 mcp = FastMCP("weather-mcp")
 
@@ -101,10 +104,7 @@ def _format_forecast(data: dict[str, Any], days: int = 3) -> str:
 import sys
 
 def main() -> None:
-    if "--gui" in sys.argv:
-        mcp.gui()
-    else:
-        mcp.run(transport="http", host="0.0.0.0")
+    mcp.run(transport="http", host="0.0.0.0")
 
 
 if __name__ == "__main__":
