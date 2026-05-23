@@ -84,7 +84,7 @@ To use this server with the Claude Desktop app, add the following to your `claud
       "command": "uv",
       "args": [
         "--directory",
-        "C:/Users/kikki/Documents/code/weather-mcp",
+        "C:/Users/Documents/code/weather-mcp",
         "run",
         "weather-mcp"
       ],
